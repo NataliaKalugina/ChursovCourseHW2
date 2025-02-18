@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class СalculateDeliveryCostTest {
+public class CalculateDeliveryCostTest {
 
     @Test   // единичная проверка. был сделан для отладки, оставлен для статистики, что знаю @Test
     @Tag("positive")

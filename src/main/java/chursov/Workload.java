@@ -6,7 +6,7 @@ public enum Workload {
     INCREASED (1.2),
     NORMAL (1);
 
-    private double deliveryRate;
+    private final double deliveryRate;
 
     Workload(double deliveryRate) {
         this.deliveryRate = deliveryRate;
