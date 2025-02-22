@@ -2,10 +2,17 @@ package chursov;
 
 public class DeliveryCalculation {
 
-    public static double calculateDeliveryCost(double distance, boolean isLarge, boolean isFragile, Workload workload){
+    public static double calculateDeliveryCost(double distance, boolean isLarge, boolean isFragile, Workload workload) throws NegativeDistanceException, FragileLongDistanseException {
 
         final double MIN_DELIVER_COST = 400;
         double deliveryCost = 0;
+
+        if (distance < 0){
+            throw new NegativeDistanceException ("Расстояние не может быть отрицательным");
+        }
+        if (isFragile == true && distance > 30){
+            throw new FragileLongDistanseException ("Хрупкие грузы нельзя возить на расстояние более 30 км");
+        }
 
         if (distance <= 2){
             deliveryCost = deliveryCost + 50;
@@ -17,9 +24,9 @@ public class DeliveryCalculation {
             deliveryCost = deliveryCost + 300;
         }
 
-        deliveryCost = (isLarge) ? deliveryCost + 200 : deliveryCost + 100 ;
+        deliveryCost = (isLarge == true) ? deliveryCost + 200 : deliveryCost + 100 ; // не ругайтесь на "== true". мне так понятнее
 
-        deliveryCost = (isFragile) ? deliveryCost + 300 : deliveryCost ;
+        deliveryCost = (isFragile == true) ? deliveryCost + 300 : deliveryCost ;
 
         deliveryCost = deliveryCost * workload.getDeliveryRate();
 
