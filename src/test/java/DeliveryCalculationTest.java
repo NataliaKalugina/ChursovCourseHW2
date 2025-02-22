@@ -48,19 +48,27 @@ public class DeliveryCalculationTest {
     @Tag("negative")
     @DisplayName("Негативный. Отрицательное расстояние")
     void CalculateDeliveryCostNegativeDistanceTest() {
-        NegativeDistanceException exception = assertThrows(NegativeDistanceException.class, () ->
-                DeliveryCalculation.calculateDeliveryCost(-10, false, false, Workload.VERY_HIGH)
-        );
-        assertEquals("Расстояние не может быть отрицательным", exception.getMessage());
+        double distance = -10;      // отрицательное расстояние
+        boolean isLarge = false;
+        boolean isFragile = false;
+        Workload workload= Workload.VERY_HIGH;
+
+        NegativeDistanceException actualException = assertThrows (NegativeDistanceException.class, () ->
+                DeliveryCalculation.calculateDeliveryCost(distance, isLarge, isFragile, workload));
+        assertEquals("Расстояние не может быть отрицательным", actualException.getMessage());
     }
 
     @Test
     @Tag("negative")
     @DisplayName("Негативный. Хрупкий груз на 30+ км")
     void CalculateDeliveryCostFragleLongDistanceTest() {
+        double distance = 31;      // расстояние 30+ и хрупкий грузо
+        boolean isLarge = false;
+        boolean isFragile = true;   // расстояние 30+ и хрупкий грузо
+        Workload workload= Workload.VERY_HIGH;
+
         FragileLongDistanseException exception = assertThrows(FragileLongDistanseException.class, () ->
-                DeliveryCalculation.calculateDeliveryCost(31, false, true, Workload.VERY_HIGH)
-        );
+                DeliveryCalculation.calculateDeliveryCost(distance, isLarge, isFragile, workload));
         assertEquals("Хрупкие грузы нельзя возить на расстояние более 30 км", exception.getMessage());
     }
 }
